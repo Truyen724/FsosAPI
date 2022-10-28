@@ -57,7 +57,7 @@ class thiet_bi_deo:
             "last_active_at":self.last_active_at,
             "update_date_at":self.update_date_at,
             "battery_percentage":self.battery_percentage,
-            "status":self.status
+            "button_status ":self.status
         }
         return out
 class Device_dow:
@@ -96,8 +96,8 @@ class Device_dow:
         lib = {
             "id_gateway":self.gateway.id,
             "lat":self.gateway.lat,
-            "lon":self.gateway.lon,
-            "degreeDirection":self.gateway.degreeDirection
+            "long":self.gateway.lon,
+            "degree_direction":self.gateway.degreeDirection
             # "id_gateway_":mac
         }
         return lib

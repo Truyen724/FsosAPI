@@ -1,0 +1,54 @@
+API: /data_device
+không cần truyền vào API cái j cả
+
+// 20221028103410
+// http://127.0.0.1:5000/data_device
+[
+  {
+    "id_device": "1",
+    "lat": null,
+    "long": null,
+    "last_active_at": null,
+    "update_date_at": 1666931636.2312610149,
+    "battery_percentage": null,
+    "status": null
+  },
+  {
+    "id_device": "2",
+    "lat": null,
+    "long": null,
+    "last_active_at": null,
+    "update_date_at": 1666931636.2312610149,
+    "battery_percentage": null,
+    "status": null
+  },
+  {
+    "id_device": "3",
+    "lat": null,
+    "long": null,
+    "last_active_at": null,
+    "update_date_at": 1666931636.2312610149,
+    "battery_percentage": null,
+    "status": null
+  }
+]
+device: thiết bi đeo của
+{	'id_device': '1', 
+	'lat': '123456',
+	'long': '80', 
+	'last_active_at': '123456,80', 
+	'update_date_at': 1666915126.391565, 
+	'battery_percentage': None,
+	'status': '123456'
+}
+API: /data_gateway
+// 20221028113323
+// http://127.0.0.1:5000/data_gateway
+
+{
+  "id_gateway": "009",
+  "lat": "123456",
+  "lon": "123456",
+  "degreeDirection": "90"
+}
+

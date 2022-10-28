@@ -1,8 +1,11 @@
 import get_data
 from flask import Flask
+from pygame import mixer
 import time
 import json
 import pandas as pd
+import time
+mixer.init()
 app = Flask(__name__)
 from get_data import Device_dow
 device_dow = Device_dow()
@@ -33,7 +36,7 @@ def start():
             print(device_dow.get_gate_way())
         except:
             pass
-start()
+# start()
 
 
 
@@ -81,7 +84,25 @@ def data_gateway():
         pass
     dataB = pd.Series(c)
     return  dataB.to_json()
+is_on = False
+@app.route('/on')
+def on():
+    global is_on
+    is_on  = True
+    mixer.music.load('file.mp3')
 
+    while is_on == True:
+        mixer.music.play()
+        time.sleep(50)
+    mixer.music.pause()
+    is_on = False
+    return
+@app.route('/off')
+def off():
+    global is_on
+    is_on = False
+    mixer.music.pause()
+    return 
 if(__name__ == "__main__"):
-    app.run(debug=True)
+    app.run(host = "0.0.0.0",debug=True)
 # ser.close()             # close port

@@ -52,3 +52,7 @@ API: /data_gateway
   "degreeDirection": "90"
 }
 
+api bật chuông 
+/on
+api tắt chuông 
+/off

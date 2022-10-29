@@ -102,7 +102,8 @@ def off():
     global is_on
     is_on = False
     mixer.music.pause()
-    return 
+    out = json.dumps("ok")
+    return out
 if(__name__ == "__main__"):
     app.run(host = "0.0.0.0",debug=True)
 # ser.close()             # close port

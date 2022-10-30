@@ -37,8 +37,8 @@ class thiet_bi_deo:
             self.lost_connect = 1
         # elif(self.status!=0):
         #     return True
-        # else:
-        #     return False
+        else:
+            self.lost_connect = 0
 
 
 # Set thời gian lại cho máy

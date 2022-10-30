@@ -65,3 +65,4 @@ api  thay đổi thời gian an toàn
 6 là số phút
 mặc định là 10
 mỗi lần khơi động là reset là 10
+sss

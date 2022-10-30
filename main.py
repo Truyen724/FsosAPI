@@ -1,5 +1,6 @@
+from sympy import re
 import get_data
-from flask import Flask
+from flask import Flask, request
 from pygame import mixer
 import time
 import json
@@ -87,23 +88,43 @@ def data_gateway():
 is_on = False
 @app.route('/on')
 def on():
+
     global is_on
     is_on  = True
     mixer.music.load('file.mp3')
-
-    while is_on == True:
-        mixer.music.play()
-        time.sleep(50)
+    try:
+        while is_on == True:
+            mixer.music.play()
+            time.sleep(50)
+        
+    except:
+        out = json.dumps("0")
+        return out
     mixer.music.pause()
     is_on = False
-    return
+    out = json.dumps("1")
+    return out
 @app.route('/off')
 def off():
-    global is_on
-    is_on = False
-    mixer.music.pause()
-    out = json.dumps("ok")
+    try:
+        global is_on
+        is_on = False
+        mixer.music.pause()
+    except:
+        out = json.dumps("0")
+        return out
+    out = json.dumps("1")
     return out
+@app.route('/change_time_out', methods=['POST'])
+def change_time_out():
+    framework = None
+    request_data = json.loads(request.data)
+    if 'time_safe' in request_data:
+        framework = request_data['time_safe']
+        get_data.time_out = int(framework)*60
+
+    return str(get_data.time_out)
+    
 if(__name__ == "__main__"):
     app.run(host = "0.0.0.0",debug=True)
 # ser.close()             # close port

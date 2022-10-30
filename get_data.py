@@ -28,16 +28,18 @@ class thiet_bi_deo:
         self.battery_percentage = battery_percentage
         self.update_date_at = datetime.now().timestamp()
         self.degreeDirection = degreeDirection
+        self.lost_connect = 0
 
 # Kiểm tra thời gian
-    # def check_time_and_status(self):
-    #     time_dif = datetime.now() - datetime.fromtimestamp(self.last_active_at)
-    #     if(time_dif>time_out):
-    #         return True
-    #     elif(self.status!=0):
-    #         return True
-    #     else:
-    #         return False
+    def check_time_and_status(self):
+        time_dif = datetime.now() - datetime.fromtimestamp(self.last_active_at)
+        if(time_dif>time_out):
+            self.lost_connect = 1
+        # elif(self.status!=0):
+        #     return True
+        # else:
+        #     return False
+
 
 # Set thời gian lại cho máy
     def update_data(self, id,lat,lon,bat_perc, status):
@@ -57,7 +59,8 @@ class thiet_bi_deo:
             "last_active_at":self.last_active_at,
             "update_date_at":self.update_date_at,
             "battery_percentage":self.battery_percentage,
-            "button_status ":self.status
+            "button_status ":self.status,
+            "lost_connect":  self.lost_connect
         }
         return out
 class Device_dow:
@@ -85,8 +88,10 @@ class Device_dow:
         lib_strange = []
         for device in self.lst:
             lib.append(device.get_libraries())
+            device.check_time_and_status()
         for device in self.lst_strange:
             lib_strange.append(device.get_libraries())
+            device.check_time_and_status()
         # out = str(lib),str(lib_strange)
         # return lib,lib_strange
         return lib

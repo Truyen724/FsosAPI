@@ -1,4 +1,4 @@
-import mysql.connector
+# import mysql.connector
 from datetime import datetime
 import re, uuid
 import json
@@ -9,12 +9,12 @@ import json
 # mac = ':'.join(re.findall('..', '%012x' % uuid.getnode()))
 # print(x)
 time_out  = 10*60
-mydb = mysql.connector.connect(
-  host="127.0.0.1",
-  user="root",
-  password="Ntt@2432001",
-  database="fsos"
-)
+# mydb = mysql.connector.connect(
+#   host="127.0.0.1",
+#   user="root",
+#   password="Ntt@2432001",
+#   database="fsos"
+# )
 class thiet_bi_deo:
     def __init__(self, id = 1, boat_id = 1, name = "unknow",is_active = 1,last_active_at = "", lat = "", lon = "", status = 0, battery_percentage = "", update_date_at = "",degreeDirection = "" ):
         self.id = id
@@ -68,16 +68,16 @@ class Device_dow:
         self.lst = []
         self.lst_strange = []
         
-    def read_data(self):
-        try:
-            mycursor = mydb.cursor()
-            mycursor.execute("SELECT * FROM fsos.device left join fsos.device_realtime_data ON  device.id = device_realtime_data.id;")
-            myresult = mycursor.fetchall()
-            for result in myresult:
-                x = thiet_bi_deo(id = result[0],boat_id = result[1], name=result[2],is_active = result[3],last_active_at = result[4],lat = result[6], lon = result[7],status=result[8],battery_percentage = result[9], update_date_at = result[10],degreeDirection = "")
-                self.lst.append(x)
-        except:
-            pass
+    # def read_data(self):
+    #     try:
+    #         mycursor = mydb.cursor()
+    #         mycursor.execute("SELECT * FROM fsos.device left join fsos.device_realtime_data ON  device.id = device_realtime_data.id;")
+    #         myresult = mycursor.fetchall()
+    #         for result in myresult:
+    #             x = thiet_bi_deo(id = result[0],boat_id = result[1], name=result[2],is_active = result[3],last_active_at = result[4],lat = result[6], lon = result[7],status=result[8],battery_percentage = result[9], update_date_at = result[10],degreeDirection = "")
+    #             self.lst.append(x)
+    #     except:
+    #         pass
     # def update_data(self, id, lat, lon,bat_perc,status):
     #     for device in self.lst:
     #         device.update_data(id, lat, lon, bat_perc,status)

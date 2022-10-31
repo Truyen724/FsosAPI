@@ -22,10 +22,10 @@ def get_data(line):
         print(data[1],data[2],data[3], data[4])
     if(data[0]=="1"):
         device_dow.update_data(data[1],data[3],data[4],data[5],data[2])
-        print(device_dow.get_libraries())
-        print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
-    print(data[0]=="1")
-    print(data[0]+"Data type")
+        # print(device_dow.get_libraries())
+        # print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
+    # print(data[0]=="1")
+    # print(data[0]+"Data type")
 def start():
     ser = serial.Serial('COM3', 9600, timeout=1)  # open serial port
 

@@ -8,7 +8,7 @@ import json
 # print ("Mac Address:  ", end="")
 # mac = ':'.join(re.findall('..', '%012x' % uuid.getnode()))
 # print(x)
-time_out  = 10*60
+time_out  = 10
 # mydb = mysql.connector.connect(
 #   host="127.0.0.1",
 #   user="root",
@@ -32,10 +32,11 @@ class thiet_bi_deo:
 
 # Kiểm tra thời gian
     def check_time_and_status(self):
-        time_dif = datetime.now() - datetime.fromtimestamp(self.last_active_at)
-        if(time_dif>time_out):
+        time_dif = datetime.now() - datetime.fromtimestamp(float(self.update_date_at))
+        print(time_dif)
+        if(time_dif.total_seconds()>time_out):
             self.lost_connect = 1
-        # elif(self.status!=0):
+        # elif(self.status!=0):  
         #     return True
         else:
             self.lost_connect = 0
@@ -84,17 +85,17 @@ class Device_dow:
     #     for device in self.lst_strange:
     #         device.update_data(id, lat, lon, bat_perc,status)
     def get_libraries(self):
-        lib =[]
+        # lib =[]
         lib_strange = []
-        for device in self.lst:
-            lib.append(device.get_libraries())
-            device.check_time_and_status()
+        # for device in self.lst:
+        #     lib.append(device.get_libraries())
+        #     device.check_time_and_status()
         for device in self.lst_strange:
             lib_strange.append(device.get_libraries())
             device.check_time_and_status()
         # out = str(lib),str(lib_strange)
         # return lib,lib_strange
-        return lib
+        return lib_strange
     def init_gate_way(self, id, lat, lon,degreeDirection):
         self.gateway = thiet_bi_deo(id = id,lat = lat,lon = lon,degreeDirection = degreeDirection)
     def get_gate_way(self):
@@ -107,20 +108,27 @@ class Device_dow:
         }
         return lib
     def update_data(self, id, lat, lon,bat_perc,status):
-        x = 0
-        for device in self.lst:
-            if(id == device.id):
-                x = 1
-                device.update_data(id, lat, lon, bat_perc,status)
-        if x == 0:
-            # y = 0
-            # for device_strange in self.lst_strange:
-            #     if(device_strange.id == id):
-            #         y = 1
-            #         device_strange.update_data(id, lat, lon, bat_perc,status)
-            # if(y == 0):
-            new = thiet_bi_deo(id = id,lat = lat,lon = lon,bat_perc = bat_perc, status = status)
+        print("Xin chào")
+        if len(self.lst_strange) == 0:
+            new = thiet_bi_deo(id = id,lat = lat,lon = lon,battery_percentage = bat_perc, status = status)
+            print("SSSSSS")
+            print(new.get_libraries())
             self.lst_strange.append(new)
-            self.lst.append(new)
+        else:
+            x = 0
+            for device in self.lst_strange:
+                if(id == device.id):
+                    x = 1
+                    device.update_data(id, lat, lon, bat_perc,status)
+            if x == 0:
+                # y = 0
+                # for device_strange in self.lst_strange:
+                #     if(device_strange.id == id):
+                #         y = 1
+                #         device_strange.update_data(id, lat, lon, bat_perc,status)
+                # if(y == 0):
+                new = thiet_bi_deo(id = id,lat = lat,lon = lon,battery_percentage = bat_perc, status = status)
+                self.lst_strange.append(new)
+            # self.lst.append(new)
 
         

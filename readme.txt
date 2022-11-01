@@ -5,31 +5,13 @@ không cần truyền vào API cái j cả
 // http://127.0.0.1:5000/data_device
 [
   {
-    "id_device": "1",
-    "lat": null,
-    "long": null,
-    "last_active_at": null,
-    "update_date_at": 1666931636.2312610149,
-    "battery_percentage": null,
-    "status": null
-  },
-  {
-    "id_device": "2",
-    "lat": null,
-    "long": null,
-    "last_active_at": null,
-    "update_date_at": 1666931636.2312610149,
-    "battery_percentage": null,
-    "status": null
-  },
-  {
     "id_device": "3",
     "lat": null,
     "long": null,
     "last_active_at": null,
     "update_date_at": 1666931636.2312610149,
     "battery_percentage": null,
-    "status": null,
+    "button_status": null,
     "lost_connect":  0
   }
 ]

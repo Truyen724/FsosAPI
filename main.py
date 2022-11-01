@@ -38,10 +38,9 @@ def get_data(line):
         # print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
     # print(data[0]=="1")
     # print(data[0]+"Data type")
-try:
-    ser = serial.Serial(port, 9600, timeout=1) 
-except:
-    pass
+
+ser = serial.Serial(port, 9600, timeout=1) 
+
 def start():
     for i in range(5):
         

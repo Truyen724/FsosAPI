@@ -41,6 +41,7 @@ api tắt chuông, tắt đèn
 /off
 
 api đổi khoảng cách
+/change_distance
 {
     "distance":"6"
 }

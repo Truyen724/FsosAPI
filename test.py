@@ -1,13 +1,10 @@
-from sys import platform
-linkFile = "/home/truyen/FsosAPI/file.mp3"
+import serial
 port = "COM3"
-if platform == "linux" or platform == "linux2":
-    linkFile = "/home/truyen/FsosAPI/file.mp3"
-    port = "tty/USB0"
-    print(linkFile)
-    print(port)
-    print(platform)
-else:
-    print(linkFile)
-    print(port)
-    print(platform)
+ser = serial.Serial(port, 9600, timeout=1)  # open serial port
+import time
+for i in range(5):
+    print(ser.name)    
+    print(ser.isOpen())     # check which port was really used
+    distance = "xxxxxxxxxxxxxxxxxxxxxxxx"
+    print((distance+"\n").encode())
+    

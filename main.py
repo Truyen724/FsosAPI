@@ -23,6 +23,7 @@ if platform == "linux" or platform == "linux2":
     print(platform)
 
 import serial
+
 def get_data(line):
     global device_dow
     line = str(line).replace("b","").replace(" ","").replace("'","")
@@ -37,10 +38,13 @@ def get_data(line):
         # print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
     # print(data[0]=="1")
     # print(data[0]+"Data type")
+try:
+    ser = serial.Serial(port, 9600, timeout=1) 
+except:
+    pass
 def start():
-    ser = serial.Serial(port, 9600, timeout=1)  # open serial port
-
     for i in range(5):
+        
         print(ser.name)    
         print(ser.isOpen())     # check which port was really used
         line = ser.readline()   # write a string
@@ -86,11 +90,13 @@ def den_off():
         pass 
     out = json.dumps("da tat")
     return out    
+@app.route('/')
 @app.route('/data_device')
 def data_device():
-    ser = serial.Serial(port, 9600, timeout=1)  # open serial port
+     # open serial port
     start_time = time.time()
-    while (time.time() - start_time) < 2:
+    # while (time.time() - start_time) < 1:
+    for i in range(10):
         print(ser.name)    
         print(ser.isOpen())     # check which port was really used
         line = ser.readline()   # write a string
@@ -133,8 +139,8 @@ def on():
         return out
     mixer.music.pause()
     is_on = False
-    out = json.dumps("1")
-    return out
+    # out = json.dumps("1")
+    # return out
 @app.route('/off')
 def off():
     den_off()
@@ -154,7 +160,6 @@ def change_time_out():
     if 'time_safe' in request_data:
         framework = request_data['time_safe']
         get_data.time_out = int(framework)*60
-
     return str(get_data.time_out)
 
 @app.route('/change_distance', methods=['POST'])
@@ -162,15 +167,13 @@ def change_distance():
     request_data = json.loads(request.data)
     if 'distance' in request_data:
         distance = request_data['distance']
-        
-        ser = serial.Serial(port, 9600, timeout=1)  # open serial port
         start_time = time.time()
-        while (time.time() - start_time) < 2:
+        for i in range(10):
             print(ser.name)    
             print(ser.isOpen())     # check which port was really used
             print(distance)
-            ser.write((distance+"'\n'"+"\n").encode())
+            ser.write((distance+"\n").encode())
         return distance
 if(__name__ == "__main__"):
-    app.run(host = "0.0.0.0",debug=True)
-# ser.close()             # close port
+    app.run(host = "0.0.0.0",debug=False)
+    ser.close()             # close port

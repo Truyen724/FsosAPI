@@ -110,8 +110,27 @@ def data_device():
     # a, b = device_dow.get_libraries()
     a = device_dow.get_libraries()
     dataA = pd.DataFrame(a)
-
     return dataA.to_json(orient="records")
+    # String a = "1,001,1,123456,123456,80,z/n";  
+@app.route('/open_saving', methods=['POST'])
+def open_saving():
+    request_data = json.loads(request.data)
+    id_ = request_data["id"]
+    status_ = request_data["button_status"]
+    lat = request_data["lat"]
+    long = request_data["long"]
+    line = "1,{id_},{status_},{lat},{lon},{line}80,z/n\n".format(id_=id_, status_=status_, lat=lat, long=long)
+            # {
+            #   "id":id, 
+            #   "button_status":button_status
+            #   "lat":lat,
+            #   "long":long
+            # }
+    try:
+        ser.write(line.encode())
+    except:
+        pass
+    return line
 @app.route('/data_gateway')
 def data_gateway():
     c = {}
@@ -174,6 +193,8 @@ def change_distance():
             print(distance)
             ser.write((distance+"\n").encode())
         return distance
+
+
 if(__name__ == "__main__"):
     app.run(host = "0.0.0.0",debug=False)
     ser.close()             # close port

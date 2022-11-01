@@ -35,13 +35,11 @@ class thiet_bi_deo:
         time_dif = datetime.now() - datetime.fromtimestamp(float(self.update_date_at))
         print(time_dif)
         if(time_dif.total_seconds()>time_out):
-            self.lost_connect = 1
+            self.lost_connect = "1"
         # elif(self.status!=0):  
         #     return True
         else:
-            self.lost_connect = 0
-
-
+            self.lost_connect = "0"
 # Set thời gian lại cho máy
     def update_data(self, id,lat,lon,bat_perc, status):
         if id == self.id:

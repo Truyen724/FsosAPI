@@ -50,10 +50,10 @@ def start():
             print(device_dow.get_gate_way())
         except:
             pass
-# start()
+start()
 
 
-@app.route('/on_light')
+# @app.route('/on_light')
 def den_on():
     try:
         import RPi.GPIO as GPIO#
@@ -64,11 +64,12 @@ def den_on():
         GPIO.setup(PORT_GPIO, GPIO.OUT)       
         GPIO.output(PORT_GPIO,GPIO.HIGH)
         GPIO.output(PORT_GPIO,GPIO.LOW)
+        print("Den on")
     except:
-        pass 
+        print("Loi")
     out = json.dumps("da bat")
     return out
-@app.route('/off_light')
+# @app.route('/off_light')
 def den_off():
     try:
         import RPi.GPIO as GPIO#
@@ -78,10 +79,10 @@ def den_off():
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(PORT_GPIO, GPIO.OUT)        
         # GPIO.output(PORT_GPIO,GPIO.HIGH)
-            
-        
         GPIO.output(PORT_GPIO,GPIO.LOW)
+        print("Den off")
     except:
+        print("Loi")
         pass 
     out = json.dumps("da tat")
     return out    
@@ -118,7 +119,7 @@ def data_gateway():
 is_on = False
 @app.route('/on')
 def on():
-
+    den_on()
     global is_on
     is_on  = True
     mixer.music.load('file.mp3')
@@ -136,6 +137,7 @@ def on():
     return out
 @app.route('/off')
 def off():
+    den_off()
     try:
         global is_on
         is_on = False
@@ -155,7 +157,20 @@ def change_time_out():
 
     return str(get_data.time_out)
 
-
+@app.route('/change_distance', methods=['POST'])
+def change_distance():
+    request_data = json.loads(request.data)
+    if 'distance' in request_data:
+        distance = request_data['distance']
+        
+        ser = serial.Serial(port, 9600, timeout=1)  # open serial port
+        start_time = time.time()
+        while (time.time() - start_time) < 2:
+            print(ser.name)    
+            print(ser.isOpen())     # check which port was really used
+            print(distance)
+            ser.write((distance+"'\n'"+"\n").encode())
+        return distance
 if(__name__ == "__main__"):
     app.run(host = "0.0.0.0",debug=True)
 # ser.close()             # close port

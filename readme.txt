@@ -35,16 +35,12 @@ API: /data_gateway
   "degreeDirection": "90"
 }
 
-api bật chuông 
+api bật chuông, bật đèn
 /on
-api tắt chuông 
+api tắt chuông, tắt đèn
 /off
-api  thay đổi thời gian an toàn
-/change_time_out
+
+api đổi khoảng cách
 {
-    "time_safe":"6"
+    "distance":"6"
 }
-6 là số phút
-mặc định là 10
-mỗi lần khơi động là reset là 10
-sss

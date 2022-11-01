@@ -118,7 +118,7 @@ def open_saving():
     status_ = request_data["button_status"]
     lat = request_data["lat"]
     long = request_data["long"]
-    line = "1,{id_},{status_},{lat},{lon},{line}80,z/n\n".format(id_=id_, status_=status_, lat=lat, long=long)
+    line = "1,{id_},{status_},{lat},{long},80,z/n\n".format(id_=id_, status_=status_, lat=lat, long=long)
             # {
             #   "id":id, 
             #   "button_status":button_status
@@ -129,7 +129,7 @@ def open_saving():
         ser.write(line.encode())
     except:
         pass
-    return line
+    return str(line)
 @app.route('/data_gateway')
 def data_gateway():
     c = {}

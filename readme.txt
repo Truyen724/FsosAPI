@@ -45,3 +45,12 @@ api đổi khoảng cách
 {
     "distance":"6"
 }
+api mở rộng tìm kiếm
+/open_saving', methods=['POST']
+{
+    "id":"6",
+    "button_status":"1",
+    "lat":"12223,33",
+    "long":"12223,33"
+}
+Khi có báo động thì POST thông tin này vào

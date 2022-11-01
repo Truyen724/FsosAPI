@@ -11,6 +11,7 @@ app = Flask(__name__)
 from get_data import Device_dow
 device_dow = Device_dow()
 # device_dow.read_data()
+port = "COM3"
 import serial
 def get_data(line):
     global device_dow
@@ -27,7 +28,7 @@ def get_data(line):
     # print(data[0]=="1")
     # print(data[0]+"Data type")
 def start():
-    ser = serial.Serial('COM3', 9600, timeout=1)  # open serial port
+    ser = serial.Serial(port, 9600, timeout=1)  # open serial port
 
     for i in range(5):
         print(ser.name)    
@@ -45,7 +46,7 @@ start()
 
 @app.route('/data_device')
 def data_device():
-    ser = serial.Serial('COM3', 9600, timeout=1)  # open serial port
+    ser = serial.Serial(port, 9600, timeout=1)  # open serial port
     start_time = time.time()
     while (time.time() - start_time) < 2:
         print(ser.name)    

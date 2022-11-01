@@ -6,12 +6,22 @@ import time
 import json
 import pandas as pd
 import time
+from sys import platform
+
 mixer.init()
+linkFile = "file.mp3"
 app = Flask(__name__)
 from get_data import Device_dow
 device_dow = Device_dow()
 # device_dow.read_data()
 port = "COM3"
+if platform == "linux" or platform == "linux2":
+    linkFile = "/home/truyen/FsosAPI/file.mp3"
+    port = "tty/USB0"
+    print(linkFile)
+    print(port)
+    print(platform)
+
 import serial
 def get_data(line):
     global device_dow
@@ -40,10 +50,41 @@ def start():
             print(device_dow.get_gate_way())
         except:
             pass
-start()
+# start()
 
 
+@app.route('/on_light')
+def den_on():
+    try:
+        import RPi.GPIO as GPIO#
+        import time
 
+        PORT_GPIO = 21
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setup(PORT_GPIO, GPIO.OUT)       
+        GPIO.output(PORT_GPIO,GPIO.HIGH)
+        GPIO.output(PORT_GPIO,GPIO.LOW)
+    except:
+        pass 
+    out = json.dumps("da bat")
+    return out
+@app.route('/off_light')
+def den_off():
+    try:
+        import RPi.GPIO as GPIO#
+        import time
+
+        PORT_GPIO = 21
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setup(PORT_GPIO, GPIO.OUT)        
+        # GPIO.output(PORT_GPIO,GPIO.HIGH)
+            
+        
+        GPIO.output(PORT_GPIO,GPIO.LOW)
+    except:
+        pass 
+    out = json.dumps("da tat")
+    return out    
 @app.route('/data_device')
 def data_device():
     ser = serial.Serial(port, 9600, timeout=1)  # open serial port
@@ -82,10 +123,10 @@ def on():
     is_on  = True
     mixer.music.load('file.mp3')
     try:
+        # global is_on
         while is_on == True:
             mixer.music.play()
-            time.sleep(50)
-        
+            time.sleep(10)
     except:
         out = json.dumps("0")
         return out
@@ -113,7 +154,8 @@ def change_time_out():
         get_data.time_out = int(framework)*60
 
     return str(get_data.time_out)
-    
+
+
 if(__name__ == "__main__"):
     app.run(host = "0.0.0.0",debug=True)
 # ser.close()             # close port

@@ -1,14 +1,26 @@
-#sudo apt-get install python-rpi.gpio python3-rpi.gpio
-import RPi.GPIO as GPIO
-from time import sleep 
+try:
+    import RPi.GPIO as GPIO#
+    import time
 
-PORT_GPIO = 11
+    PORT_GPIO = 21
+    GPIO.setmode(GPIO.BCM)
+    GPIO.setup(PORT_GPIO, GPIO.OUT)
 
-GPIO.setwarnings(False) 
-GPIO.setmode(GPIO.BOARD)
-GPIO.setup(PORT_GPIO, GPIO.OUT, initial=GPIO.LOW) 
-while True:
- GPIO.output(PORT_GPIO, GPIO.HIGH)
- sleep(0.5) 
- GPIO.output(PORT_GPIO, GPIO.LOW) 
- sleep(0.5) 
+
+    def den_on(PORT_GPIO):
+        GPIO.output(PORT_GPIO,GPIO.HIGH)
+        
+    def den_off(PORT_GPIO):
+        GPIO.output(PORT_GPIO,GPIO.LOW)
+except:
+    pass    
+# if(__name__ == "__main__"):
+#     try:
+#         den_on(PORT_GPIO)
+#         time.sleep(1)
+#         den_off(PORT_GPIO)
+#         time.sleep(1)
+#         GPIO.cleanup()
+#     except KeyboardInterrupt:
+#         GPIO.cleanup()
+#         pass

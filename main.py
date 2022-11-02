@@ -33,7 +33,12 @@ def get_data(line):
         device_dow.init_gate_way(data[1],data[2],data[3], data[4])
         print(data[1],data[2],data[3], data[4])
     if(data[0]=="1"):
-        id = data[1] , lat = data[4], long = data[5] ,bat_perc = data[6],status = data[2], out_zone = data[3]
+        id = data[1] 
+        lat = data[4]
+        long = data[5]
+        bat_perc = data[6]
+        status = data[2]
+        out_zone = data[3]
         device_dow.update_data(id, lat, long,bat_perc,status, out_zone)
         # print(device_dow.get_libraries())
         # print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
@@ -54,7 +59,6 @@ def start():
         except:
             pass
 start()
-
 
 # @app.route('/on_light')
 def den_on():
@@ -142,7 +146,7 @@ def data_gateway():
     dataB = pd.Series(c)
     return  dataB.to_json()
 is_on = False
-time_play = 1*60
+time_play = 20
 @app.route('/on')
 def on():
     start_time = time.time()
@@ -155,15 +159,15 @@ def on():
         while is_on == True:
             mixer.music.play()
             time.sleep(5)
-            if(time.time() - start_time > time_play):
+            if(time.time() - start_time) > time_play:
                 is_on = False
     except:
         out = json.dumps("0")
         return out
     mixer.music.pause()
     is_on = False
-    # out = json.dumps("1")
-    # return out
+    out = json.dumps("off")
+    return out
 @app.route('/off')
 def off():
     den_off()

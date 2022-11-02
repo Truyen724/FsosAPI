@@ -7,7 +7,7 @@ import json
 import pandas as pd
 import time
 from sys import platform
-
+from flask_cors import CORS 
 mixer.init() 
 linkFile = "file.mp3"
 app = Flask(__name__)
@@ -17,7 +17,7 @@ device_dow = Device_dow()
 port = "COM3"
 if platform == "linux" or platform == "linux2":
     linkFile = "/home/truyen/FsosAPI/file.mp3"
-    port = "tty/USB0"
+    port = "/dev/ttyUSB0"
     print(linkFile)
     print(port)
     print(platform)
@@ -85,7 +85,8 @@ def den_off():
         print("Loi")
         pass 
     out = json.dumps("da tat")
-    return out    
+    return out 
+CORS(app)   
 @app.route('/')
 @app.route('/data_device')
 def data_device():

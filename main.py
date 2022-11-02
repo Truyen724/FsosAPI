@@ -8,7 +8,7 @@ import pandas as pd
 import time
 from sys import platform
 
-mixer.init()
+mixer.init() 
 linkFile = "file.mp3"
 app = Flask(__name__)
 from get_data import Device_dow
@@ -155,7 +155,7 @@ def on():
             mixer.music.play()
             time.sleep(5)
             if(time.time() - start_time > time_play):
-                is_on == False
+                is_on = False
     except:
         out = json.dumps("0")
         return out

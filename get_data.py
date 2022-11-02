@@ -16,7 +16,7 @@ time_out  = 10
 #   database="fsos"
 # )
 class thiet_bi_deo:
-    def __init__(self, id = 1, boat_id = 1, name = "unknow",is_active = 1,last_active_at = "", lat = "", lon = "", status = 0, battery_percentage = "", update_date_at = "",degreeDirection = "" ):
+    def __init__(self, id = 1, boat_id = 1, name = "unknow",is_active = 1,last_active_at = "", lat = "", lon = "", status = 0, battery_percentage = "", update_date_at = "",degreeDirection = "",is_update = "1"):
         self.id = id
         self.boat_id = boat_id
         self.name = name
@@ -29,6 +29,7 @@ class thiet_bi_deo:
         self.update_date_at = datetime.now().timestamp()
         self.degreeDirection = degreeDirection
         self.lost_connect = 0
+        self.is_update = "1"
 
 # Kiểm tra thời gian
     def check_time_and_status(self):
@@ -50,6 +51,9 @@ class thiet_bi_deo:
             self.bat_perc =bat_perc
             self.update_date_at = datetime.now().timestamp()
             self.status = status
+            self.is_update = "1"
+
+
     def get_libraries(self):
         out = {
             "id_device":self.id,
@@ -59,7 +63,8 @@ class thiet_bi_deo:
             "update_date_at":self.update_date_at,
             "battery_percentage":self.battery_percentage,
             "button_status ":self.status,
-            "lost_connect":  self.lost_connect
+            "lost_connect":  self.lost_connect,
+            "is_update": self.is_update
         }
         return out
 class Device_dow:

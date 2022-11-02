@@ -12,18 +12,11 @@ không cần truyền vào API cái j cả
     "update_date_at": 1666931636.2312610149,
     "battery_percentage": null,
     "button_status": null,
-    "lost_connect":  0
+    "lost_connect":  "0",
+    "is_update": "1"
   }
 ]
-device: thiết bi đeo của
-{	'id_device': '1', 
-	'lat': '123456',
-	'long': '80', 
-	'last_active_at': '123456,80', 
-	'update_date_at': 1666915126.391565, 
-	'battery_percentage': None,
-	'status': '123456'
-}
+
 API: /data_gateway
 // 20221028113323
 // http://127.0.0.1:5000/data_gateway
@@ -41,7 +34,7 @@ api tắt chuông, tắt đèn
 /off
 
 api đổi khoảng cách
-/change_distance
+/change_distance, methods=['POST']
 {
     "distance":"6"
 }

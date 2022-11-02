@@ -61,7 +61,6 @@ def den_on():
     try:
         import RPi.GPIO as GPIO#
         import time
-
         PORT_GPIO = 21
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(PORT_GPIO, GPIO.OUT)       
@@ -77,7 +76,6 @@ def den_off():
     try:
         import RPi.GPIO as GPIO#
         import time
-
         PORT_GPIO = 21
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(PORT_GPIO, GPIO.OUT)        
@@ -94,6 +92,8 @@ def den_off():
 def data_device():
      # open serial port
     start_time = time.time()
+    for device in device_dow.lst_strange:
+        device.is_update = 0
     # while (time.time() - start_time) < 1:
     for i in range(10):
         print(ser.name)    

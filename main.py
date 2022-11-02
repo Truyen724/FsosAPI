@@ -93,7 +93,7 @@ def data_device():
      # open serial port
     start_time = time.time()
     for device in device_dow.lst_strange:
-        device.is_update = 0
+        device.is_update = "0"
     # while (time.time() - start_time) < 1:
     for i in range(10):
         print(ser.name)    
@@ -141,8 +141,10 @@ def data_gateway():
     dataB = pd.Series(c)
     return  dataB.to_json()
 is_on = False
+time_play = 1*60
 @app.route('/on')
 def on():
+    start_time = time.time()
     den_on()
     global is_on
     is_on  = True
@@ -151,7 +153,9 @@ def on():
         # global is_on
         while is_on == True:
             mixer.music.play()
-            time.sleep(10)
+            time.sleep(5)
+            if(time.time() - start_time > time_play):
+                is_on == False
     except:
         out = json.dumps("0")
         return out

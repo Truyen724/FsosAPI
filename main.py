@@ -23,7 +23,7 @@ if platform == "linux" or platform == "linux2":
     print(platform)
 
 import serial
-
+# Ví dụ: 1,001,1,1,123456,123456,80,z/n
 def get_data(line):
     global device_dow
     line = str(line).replace("b","").replace(" ","").replace("'","")
@@ -33,7 +33,8 @@ def get_data(line):
         device_dow.init_gate_way(data[1],data[2],data[3], data[4])
         print(data[1],data[2],data[3], data[4])
     if(data[0]=="1"):
-        device_dow.update_data(data[1],data[3],data[4],data[5],data[2])
+        id = data[1] , lat = data[4], long = data[5] ,bat_perc = data[6],status = data[2], out_zone = data[3]
+        device_dow.update_data(id, lat, long,bat_perc,status, out_zone)
         # print(device_dow.get_libraries())
         # print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
     # print(data[0]=="1")

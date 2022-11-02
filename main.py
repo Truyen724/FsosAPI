@@ -43,7 +43,6 @@ ser = serial.Serial(port, 9600, timeout=1)
 
 def start():
     for i in range(5):
-        
         print(ser.name)    
         print(ser.isOpen())     # check which port was really used
         line = ser.readline()   # write a string

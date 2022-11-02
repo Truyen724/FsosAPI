@@ -166,8 +166,10 @@ def on():
         return out
     mixer.music.pause()
     is_on = False
+    den_off()
     out = json.dumps("off")
     return out
+
 @app.route('/off')
 def off():
     den_off()

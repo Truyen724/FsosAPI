@@ -45,11 +45,21 @@ def get_data(line):
     # print(data[0]=="1")
     # print(data[0]+"Data type")
 
-ser = serial.Serial(port, 9600, timeout=1) 
+ser = serial.Serial(port, 9600, timeout=1000)
+def check():
+    while True:
+    
+        try:
+            ser = serial.Serial(port, 9600, timeout=1000)
+        except:
+            # return False
+            pass
+        pass
 
 def start():
+    global ser
     for i in range(5):
-        print(ser.name)    
+        # print(ser.name)
         print(ser.isOpen())     # check which port was really used
         line = ser.readline()   # write a string
         try:
@@ -96,18 +106,26 @@ CORS(app)
 @app.route('/data_device')
 def data_device():
      # open serial port
+    global ser
     start_time = time.time()
     for device in device_dow.lst_strange:
         device.is_update = "0"
-    # while (time.time() - start_time) < 1:
-    for i in range(10):
-        print(ser.name)    
-        print(ser.isOpen())     # check which port was really used
-        line = ser.readline()   # write a string
-        # try:
-        get_data(line)#
-        # print(device_dow.get_libraries())
-        print(device_dow.get_gate_way())
+    while (time.time() - start_time) < 1:
+    # for i in range(10):
+        try:
+            print(ser.name)    
+            print(ser.isOpen())
+                # check which port was really used
+            line = ser.readline()   # write a string
+            try:
+                get_data(line)#
+                # print(device_dow.get_libraries())
+                print(device_dow.get_gate_way())
+            except:
+                pass
+        except:
+            # check()
+            pass
     #     except:
     #         print("Loi")
 

@@ -44,17 +44,28 @@ def get_data(line):
         # print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
     # print(data[0]=="1")
     # print(data[0]+"Data type")
+open = False
+while open == False:
+    try:
+        ser = serial.Serial(port, 9600, timeout=1000)
+        open = True
+    except:
+        open = False
 
-ser = serial.Serial(port, 9600, timeout=1000)
 def check():
-    while True:
-    
+    global ser
+    ser.close()
+    x = False
+    while x == False:
         try:
             ser = serial.Serial(port, 9600, timeout=1000)
+            print("connecting......")
+            time.sleep(1)
+            x = True 
         except:
             # return False
-            pass
-        pass
+            x = False 
+        
 
 def start():
     global ser
@@ -115,16 +126,18 @@ def data_device():
         try:
             print(ser.name)    
             print(ser.isOpen())
-                # check which port was really used
+            if(ser.isOpen() == False):
+               check() # check which port was really used
             line = ser.readline()   # write a string
             try:
                 get_data(line)#
                 # print(device_dow.get_libraries())
                 print(device_dow.get_gate_way())
             except:
+                check()
                 pass
         except:
-            # check()
+            check()
             pass
     #     except:
     #         print("Loi")

@@ -58,6 +58,7 @@ def check():
     x = False
     while x == False:
         try:
+            print("connecting......")
             ser = serial.Serial(port, 9600, timeout=1000)
             print("connecting......")
             time.sleep(1)

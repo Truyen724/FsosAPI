@@ -26,6 +26,8 @@ if platform == "linux" or platform == "linux2":
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(PORT_GPIO, GPIO.OUT)   
 
+
+
 import serial
 # Ví dụ: 1,001,1,1,123456,123456,80,z/n
 def get_data(line):
@@ -92,19 +94,28 @@ start()
 def den_on():
     print("Den on")
     try:
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setup(PORT_GPIO, GPIO.OUT)   
         GPIO.output(PORT_GPIO,GPIO.HIGH)
+        time.sleep(1)
         GPIO.output(PORT_GPIO,GPIO.LOW)
         print("Den on")
     except:
         print("Loi")
+        
+
 # @app.route('/off_light')
 def den_off():
     try:
         GPIO.output(PORT_GPIO,GPIO.HIGH)
+        time.sleep(1)
         GPIO.output(PORT_GPIO,GPIO.LOW)
         print("Den off")
+        GPIO.cleanup()
+
     except:
         print("Loi")
+        
         pass
 CORS(app)   
 @app.route('/')
@@ -175,28 +186,26 @@ time_play = 20
 @app.route('/on')
 def on():
     start_time = time.time()
-    
+   
     global is_on
     is_on  = True
-    mixer.music.load('file.mp3')
+    #mixer.music.load('file.mp3')
     try:
         # global is_on
-	
         while is_on == True:
-
+            mixer.music.load('file.mp3')
             den_on()
             mixer.music.play()
             time.sleep(10)
             if(time.time() - start_time) > time_play:
                 is_on = False
-            
     except:
         out = json.dumps("0")
         den_off()
         return out
+    den_off()
     mixer.music.pause()
     is_on = False
-    
     out = json.dumps("off")
     return out
 
@@ -238,3 +247,4 @@ def change_distance():
 if(__name__ == "__main__"):
     app.run(host = "0.0.0.0",debug=False, port = 5000)
     ser.close()             # close port
+    GPIO.cleanup()

@@ -19,7 +19,8 @@ if platform == "linux" or platform == "linux2":
     linkFile = "/home/truyen/FsosAPI/file.mp3"
     port = "/dev/ttyUSB0"
     PORT_GPIO = 21
-    import RPi.GPIO as GPIO#
+    import RPi.GPIO as GPIO
+    GPIO.cleanup()
     print(linkFile)
     print(port)
     print(platform)
@@ -94,6 +95,7 @@ start()
 def den_on():
     print("Den on")
     try:
+	
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(PORT_GPIO, GPIO.OUT)   
         GPIO.output(PORT_GPIO,GPIO.HIGH)
@@ -107,7 +109,7 @@ def den_on():
 # @app.route('/off_light')
 def den_off():
     try:
-        GPIO.output(PORT_GPIO,GPIO.HIGH)
+        #GPIO.output(PORT_GPIO,GPIO.HIGH)
         time.sleep(1)
         GPIO.output(PORT_GPIO,GPIO.LOW)
         print("Den off")
@@ -247,4 +249,4 @@ def change_distance():
 if(__name__ == "__main__"):
     app.run(host = "0.0.0.0",debug=False, port = 5000)
     ser.close()             # close port
-    GPIO.cleanup()
+    #GPIO.cleanup()

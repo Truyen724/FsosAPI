@@ -88,28 +88,24 @@ def start():
         except:
             pass
 start()
-
 # @app.route('/on_light')
 def den_on():
+    print("Den on")
     try:
         GPIO.output(PORT_GPIO,GPIO.HIGH)
-        # GPIO.output(PORT_GPIO,GPIO.LOW)
+        GPIO.output(PORT_GPIO,GPIO.LOW)
         print("Den on")
     except:
         print("Loi")
-    out = json.dumps("da bat")
-    return out
 # @app.route('/off_light')
 def den_off():
     try:
-        # GPIO.output(PORT_GPIO,GPIO.HIGH)
+        GPIO.output(PORT_GPIO,GPIO.HIGH)
         GPIO.output(PORT_GPIO,GPIO.LOW)
         print("Den off")
     except:
         print("Loi")
-        pass 
-    out = json.dumps("da tat")
-    return out 
+        pass
 CORS(app)   
 @app.route('/')
 @app.route('/data_device')
@@ -179,23 +175,28 @@ time_play = 20
 @app.route('/on')
 def on():
     start_time = time.time()
-    den_on()
+    
     global is_on
     is_on  = True
     mixer.music.load('file.mp3')
     try:
         # global is_on
+	
         while is_on == True:
+
+            den_on()
             mixer.music.play()
-            time.sleep(5)
+            time.sleep(10)
             if(time.time() - start_time) > time_play:
                 is_on = False
+            
     except:
         out = json.dumps("0")
+        den_off()
         return out
     mixer.music.pause()
     is_on = False
-    den_off()
+    
     out = json.dumps("off")
     return out
 
@@ -235,5 +236,5 @@ def change_distance():
 
 
 if(__name__ == "__main__"):
-    app.run(host = "0.0.0.0",debug=False)
+    app.run(host = "0.0.0.0",debug=False, port = 5000)
     ser.close()             # close port

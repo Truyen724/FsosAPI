@@ -18,9 +18,13 @@ port = "COM3"
 if platform == "linux" or platform == "linux2":
     linkFile = "/home/truyen/FsosAPI/file.mp3"
     port = "/dev/ttyUSB0"
+    PORT_GPIO = 21
+    import RPi.GPIO as GPIO#
     print(linkFile)
     print(port)
     print(platform)
+    GPIO.setmode(GPIO.BCM)
+    GPIO.setup(PORT_GPIO, GPIO.OUT)   
 
 import serial
 # Ví dụ: 1,001,1,1,123456,123456,80,z/n
@@ -88,13 +92,8 @@ start()
 # @app.route('/on_light')
 def den_on():
     try:
-        import RPi.GPIO as GPIO#
-        import time
-        PORT_GPIO = 21
-        GPIO.setmode(GPIO.BCM)
-        GPIO.setup(PORT_GPIO, GPIO.OUT)       
         GPIO.output(PORT_GPIO,GPIO.HIGH)
-        GPIO.output(PORT_GPIO,GPIO.LOW)
+        # GPIO.output(PORT_GPIO,GPIO.LOW)
         print("Den on")
     except:
         print("Loi")
@@ -103,11 +102,6 @@ def den_on():
 # @app.route('/off_light')
 def den_off():
     try:
-        import RPi.GPIO as GPIO#
-        import time
-        PORT_GPIO = 21
-        GPIO.setmode(GPIO.BCM)
-        GPIO.setup(PORT_GPIO, GPIO.OUT)        
         # GPIO.output(PORT_GPIO,GPIO.HIGH)
         GPIO.output(PORT_GPIO,GPIO.LOW)
         print("Den off")

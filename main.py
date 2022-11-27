@@ -51,12 +51,15 @@ while open == False:
         open = True
     except:
         open = False
-
 def check():
     global ser
     ser.close()
     x = False
+    start_time = time.time()
     while x == False:
+        ti =  time.time() - start_time
+        if ti>5:
+            break
         try:
             print("connecting......")
             ser = serial.Serial(port, 9600, timeout=1000)

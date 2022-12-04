@@ -16,7 +16,7 @@ time_out  = 10
 #   database="fsos"
 # )
 class thiet_bi_deo:
-    def __init__(self, id = 1, boat_id = 1,out_of_safe_zone = "0", name = "unknow",is_active = 1,last_active_at = "", lat = "", lon = "", status = 0, battery_percentage = "", update_date_at = "",degreeDirection = "",is_update = "1"):
+    def __init__(self, id = 1, boat_id = 1,out_of_safe_zone = "0", name = "unknow",is_active = 1,last_active_at = "", lat = "", lon = "", status = 0, battery_percentage = "", update_date_at = "",degreeDirection = "",is_update = "1",ble = "0", water = "0"):
         self.id = id
         self.boat_id = boat_id
         self.name = name
@@ -31,6 +31,8 @@ class thiet_bi_deo:
         self.lost_connect = 0
         self.is_update = "1"
         self.out_of_safe_zone = out_of_safe_zone
+        self.ble = ble
+        self.water = water
 # Kiểm tra thời gian
     def check_time_and_status(self):
         time_dif = datetime.now() - datetime.fromtimestamp(float(self.update_date_at))
@@ -42,7 +44,7 @@ class thiet_bi_deo:
         else:
             self.lost_connect = "0"
 # Set thời gian lại cho máy
-    def update_data(self, id,lat,lon,bat_perc, status, out_zone):
+    def update_data(self, id,lat,lon,bat_perc, status, out_zone, ble, water):
         if id == self.id:
             if(lat!=""):
                 self.last_active_at = lat+ ","+lon
@@ -53,7 +55,8 @@ class thiet_bi_deo:
             self.status = status
             self.is_update = "1"
             self.out_of_safe_zone = out_zone
-
+            self.ble = ble
+            self.water = water
 
     def get_libraries(self):
         out = {
@@ -66,7 +69,9 @@ class thiet_bi_deo:
             "button_status ":self.status,
             "lost_connect":  self.lost_connect,
             "is_update": self.is_update,
-            "out_of_safe_zone": self.out_of_safe_zone
+            "out_of_safe_zone": self.out_of_safe_zone,
+            "ble":self.ble,
+            "water":self.water
         }
         return out
 class Device_dow:
@@ -112,10 +117,10 @@ class Device_dow:
             # "id_gateway_":mac
         }
         return lib
-    def update_data(self, id, lat, lon,bat_perc,status, out_zone):
+    def update_data(self, id, lat, lon,bat_perc,status, out_zone, ble, water):
         print("Xin chào")
         if len(self.lst_strange) == 0:
-            new = thiet_bi_deo(id = id,lat = lat,lon = lon,battery_percentage = bat_perc, status = status, out_of_safe_zone = out_zone)
+            new = thiet_bi_deo(id = id,lat = lat,lon = lon,battery_percentage = bat_perc, status = status, out_of_safe_zone = out_zone, ble = ble,water = water)
             print("SSSSSS")
             print(new.get_libraries())
             self.lst_strange.append(new)

@@ -38,13 +38,15 @@ def get_data(line):
         print(data[1],data[2],data[3], data[4])
     if(data[0]=="1"):
         id = data[1] 
-        lat = data[4]
-        long = data[5]
-        bat_perc = data[6]
+        lat = data[6]
+        long = data[7]
+        bat_perc = data[8]
         status = data[2]
-        out_zone = data[3]
-        device_dow.update_data(id, lat, long,bat_perc,status, out_zone)
-        # print(device_dow.get_libraries())
+        out_zone = data[5]
+        ble = data[3]
+        water = data[4]
+        device_dow.update_data(id, lat, long,bat_perc,status, out_zone,ble,water)
+        print(device_dow.get_libraries())
         # print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
     # print(data[0]=="1")
     # print(data[0]+"Data type")

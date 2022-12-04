@@ -26,9 +26,6 @@ if platform == "linux" or platform == "linux2":
     print(platform)
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(PORT_GPIO, GPIO.OUT)   
-
-
-
 import serial
 # Ví dụ: 1,001,1,1,123456,123456,80,z/n
 def get_data(line):

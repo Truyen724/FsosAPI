@@ -1,6 +1,5 @@
 API: /data_device
 không cần truyền vào API cái j cả
-
 // 20221028103410
 // http://127.0.0.1:5000/data_device
 [
@@ -13,7 +12,9 @@ không cần truyền vào API cái j cả
     "battery_percentage": null,
     "button_status": null,
     "lost_connect":  "0",
-    "is_update": "1"
+    "is_update": "1",
+    "ble":"1",
+    "water":"1"
   }
 ]
 
@@ -38,12 +39,9 @@ api đổi khoảng cách
 {
     "distance":"6"
 }
-api mở rộng tìm kiếm
-/open_saving', methods=['POST']
-{
-    "id":"6",
-    "button_status":"1",
-    "lat":"12223,33",
-    "long":"12223,33"
-}
 Khi có báo động thì POST thông tin này vào
+
+Data được gửi từ thiết
+
+
+

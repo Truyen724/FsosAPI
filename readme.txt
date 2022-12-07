@@ -4,18 +4,18 @@ không cần truyền vào API cái j cả
 // http://127.0.0.1:5000/data_device
 [
   {
-    "id_device": "3",
+    "id_device": 3,
     "lat": null,
     "long": null,
     "last_active_at": null,
     "update_date_at": 1666931636.2312610149,
     "battery_percentage": null,
     "button_status": null,
-    "lost_connect":  "0",
-    "is_update": "1",
-    "out_of_safe_zone":"1",
-    "ble":"1",
-    "water":"1"
+    "lost_connect":  0,
+    "is_update": 1,
+    "out_of_safe_zone":1,
+    "ble":1,
+    "water":1
   }
 ]
 
@@ -40,9 +40,11 @@ api đổi khoảng cách
 {
     "distance":"6"
 }
+data thay đổi khoảng cách viết lên serial 
+  distance+"\n"
+  10\n
+
+
 Khi có báo động thì POST thông tin này vào
 
 Data được gửi từ thiết
-
-
-

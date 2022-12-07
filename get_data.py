@@ -107,7 +107,7 @@ class Device_dow:
         # return lib,lib_strange
         return lib_strange
     def init_gate_way(self, id, lat, lon,degreeDirection):
-        self.gateway = thiet_bi_deo(id = id,lat = lat,lon = lon,degreeDirection = degreeDirection)
+        self.gateway = thiet_bi_deo(id = int(id),lat = lat,lon = lon,degreeDirection = int(degreeDirection))
     def get_gate_way(self):
         lib = {
             "id_gateway":self.gateway.id,
@@ -120,7 +120,7 @@ class Device_dow:
     def update_data(self, id, lat, lon,bat_perc,status, out_zone, ble, water):
         print("Xin chào")
         if len(self.lst_strange) == 0:
-            new = thiet_bi_deo(id = id,lat = lat,lon = lon,battery_percentage = bat_perc, status = status, out_of_safe_zone = out_zone, ble = ble,water = water)
+            new = thiet_bi_deo(id = int(id),lat = lat,lon = lon,battery_percentage = int(bat_perc), status = int(status), out_of_safe_zone = int(out_zone), ble = int(ble),water = int(water))
             print("SSSSSS")
             print(new.get_libraries())
             self.lst_strange.append(new)
@@ -137,7 +137,7 @@ class Device_dow:
                 #         y = 1
                 #         device_strange.update_data(id, lat, lon, bat_perc,status)
                 # if(y == 0):
-                new = thiet_bi_deo(id = id,lat = lat,lon = lon,battery_percentage = bat_perc, status = status)
+                new = thiet_bi_deo(id = int(id),lat = lat,lon = lon,battery_percentage = int(bat_perc), status = int(status))
                 self.lst_strange.append(new)
             # self.lst.append(new)
 

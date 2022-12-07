@@ -241,7 +241,7 @@ def change_distance():
             print(ser.name)    
             print(ser.isOpen())     # check which port was really used
             print(distance)
-            ser.write((distance+"\n").encode())
+            ser.write((distance+"\\n").encode())
         return distance
 
 

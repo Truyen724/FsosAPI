@@ -1,8 +1,13 @@
-from .test import test
-# import serial
-# port = "COM3"
-# import time
-# ser = serial.Serial(port, 9600, timeout=1000)  # open serial port
+
+
+import serial
+port = "COM3"
+import time
+ser = serial.Serial(port, 9600, timeout=1000)  # open serial port
+while True:
+    print(("x"+"\z"+"\n").encode())
+    ser.write()
+    time.sleep(0.2)
 # import time
 # def xxx():
 #     global ser

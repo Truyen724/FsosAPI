@@ -2,21 +2,9 @@
 from datetime import datetime
 import re, uuid
 import json
-
-# joins elements of getnode() after each 2 digits.
-# using regex expression
-# print ("Mac Address:  ", end="")
-# mac = ':'.join(re.findall('..', '%012x' % uuid.getnode()))
-# print(x)
 time_out  = 10
-# mydb = mysql.connector.connect(
-#   host="127.0.0.1",
-#   user="root",
-#   password="Ntt@2432001",
-#   database="fsos"
-# )
 class thiet_bi_deo:
-    def __init__(self, id = 1, boat_id = 1,out_of_safe_zone = "0", name = "unknow",is_active = 1,last_active_at = "", lat = "", lon = "", status = 0, battery_percentage = "", update_date_at = "",degreeDirection = "",is_update = "1",ble = "0", water = "0"):
+    def __init__(self, id = 1, boat_id = 1,out_of_safe_zone = 0, name = "unknow",is_active = 1,last_active_at = None , lat = None, lon = None, status = 0, battery_percentage = None, update_date_at = None,degreeDirection = None,is_update = 1,ble = 0, water = 0, type = None):
         self.id = id
         self.boat_id = boat_id
         self.name = name
@@ -29,22 +17,21 @@ class thiet_bi_deo:
         self.update_date_at = datetime.now().timestamp()
         self.degreeDirection = degreeDirection
         self.lost_connect = 0
-        self.is_update = "1"
+        self.is_update = 1
         self.out_of_safe_zone = out_of_safe_zone
         self.ble = ble
         self.water = water
+        self.type = type
 # Kiểm tra thời gian
     def check_time_and_status(self):
         time_dif = datetime.now() - datetime.fromtimestamp(float(self.update_date_at))
         print(time_dif)
         if(time_dif.total_seconds()>time_out):
-            self.lost_connect = "1"
-        # elif(self.status!=0):  
-        #     return True
+            self.lost_connect = 1
         else:
-            self.lost_connect = "0"
+            self.lost_connect = 0
 # Set thời gian lại cho máy
-    def update_data(self, id,lat,lon,bat_perc, status, out_zone, ble, water):
+    def update_data(self, id,lat,lon,bat_perc, status, out_zone, ble, water, type):
         if id == self.id:
             if(lat!=""):
                 self.last_active_at = lat+ ","+lon
@@ -57,7 +44,7 @@ class thiet_bi_deo:
             self.out_of_safe_zone = out_zone
             self.ble = ble
             self.water = water
-
+            self.type = type
     def get_libraries(self):
         out = {
             "id_device":self.id,
@@ -71,56 +58,36 @@ class thiet_bi_deo:
             "is_update": self.is_update,
             "out_of_safe_zone": self.out_of_safe_zone,
             "ble":self.ble,
-            "water":self.water
+            "water":self.water,
+            "type":self.type
         }
         return out
 class Device_dow:
     def __init__(self):
         self.lst = []
         self.lst_strange = []
-        
-    # def read_data(self):
-    #     try:
-    #         mycursor = mydb.cursor()
-    #         mycursor.execute("SELECT * FROM fsos.device left join fsos.device_realtime_data ON  device.id = device_realtime_data.id;")
-    #         myresult = mycursor.fetchall()
-    #         for result in myresult:
-    #             x = thiet_bi_deo(id = result[0],boat_id = result[1], name=result[2],is_active = result[3],last_active_at = result[4],lat = result[6], lon = result[7],status=result[8],battery_percentage = result[9], update_date_at = result[10],degreeDirection = "")
-    #             self.lst.append(x)
-    #     except:
-    #         pass
-    # def update_data(self, id, lat, lon,bat_perc,status):
-    #     for device in self.lst:
-    #         device.update_data(id, lat, lon, bat_perc,status)
-    #     for device in self.lst_strange:
-    #         device.update_data(id, lat, lon, bat_perc,status)
     def get_libraries(self):
         # lib =[]
         lib_strange = []
-        # for device in self.lst:
-        #     lib.append(device.get_libraries())
-        #     device.check_time_and_status()
         for device in self.lst_strange:
             lib_strange.append(device.get_libraries())
             device.check_time_and_status()
-        # out = str(lib),str(lib_strange)
-        # return lib,lib_strange
         return lib_strange
-    def init_gate_way(self, id, lat, lon,degreeDirection):
-        self.gateway = thiet_bi_deo(id = int(id),lat = lat,lon = lon,degreeDirection = int(degreeDirection))
+    def init_gate_way(self, id, lat, lon,degreeDirection, type):
+        self.gateway = thiet_bi_deo(id = int(id),lat = lat,lon = lon,degreeDirection = int(degreeDirection), type = int(type))
     def get_gate_way(self):
         lib = {
             "id_gateway":self.gateway.id,
             "lat":self.gateway.lat,
             "long":self.gateway.lon,
-            "degree_direction":self.gateway.degreeDirection
-            # "id_gateway_":mac
+            "degree_direction":self.gateway.degreeDirection,
+            "type" :self.gateway.type
         }
         return lib
-    def update_data(self, id, lat, lon,bat_perc,status, out_zone, ble, water):
+    def update_data(self, id, lat, lon,bat_perc,status, out_zone, ble, water, type):
         print("Xin chào")
         if len(self.lst_strange) == 0:
-            new = thiet_bi_deo(id = int(id),lat = lat,lon = lon,battery_percentage = int(bat_perc), status = int(status), out_of_safe_zone = int(out_zone), ble = int(ble),water = int(water))
+            new = thiet_bi_deo(id = int(id),lat = lat,lon = lon,battery_percentage = int(bat_perc), status = int(status), out_of_safe_zone = int(out_zone), ble = int(ble),water = int(water),type = int(type))
             print("SSSSSS")
             print(new.get_libraries())
             self.lst_strange.append(new)
@@ -131,14 +98,5 @@ class Device_dow:
                     x = 1
                     device.update_data(id, lat, lon, bat_perc,status, out_zone)
             if x == 0:
-                # y = 0
-                # for device_strange in self.lst_strange:
-                #     if(device_strange.id == id):
-                #         y = 1
-                #         device_strange.update_data(id, lat, lon, bat_perc,status)
-                # if(y == 0):
                 new = thiet_bi_deo(id = int(id),lat = lat,lon = lon,battery_percentage = int(bat_perc), status = int(status))
                 self.lst_strange.append(new)
-            # self.lst.append(new)
-
-        

@@ -8,7 +8,7 @@ không cần truyền vào API cái j cả
     "lat": null,
     "long": null,
     "last_active_at": null,
-    "update_date_at": 1666931636.2312610149,
+    "update_date_at": 1666931636,
     "battery_percentage": null,
     "button_status": null,
     "lost_connect":  0,
@@ -24,10 +24,10 @@ API: /data_gateway
 // http://127.0.0.1:5000/data_gateway
 
 {
-  "id_gateway": "009",
+  "id_gateway": 009,
   "lat": "123456",
   "lon": "123456",
-  "degreeDirection": "90"
+  "degreeDirection": 90
 }
 
 api bật chuông, bật đèn

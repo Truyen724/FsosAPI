@@ -34,9 +34,10 @@ def get_data(line):
     print(line)
     data = line.split(",")
     if(data[0]=="0"):
-        device_dow.init_gate_way(data[1],data[2],data[3], data[4])
-        print(data[1],data[2],data[3], data[4])
+        device_dow.init_gate_way(data[1],data[2],data[3], data[4],data[0])
+        print(data[1],data[2],data[3], data[4],data[0])
     if(data[0]=="1"):
+        type = [0]
         id = data[1] 
         lat = data[6]
         long = data[7]
@@ -45,11 +46,8 @@ def get_data(line):
         out_zone = data[5]
         ble = data[3]
         water = data[4]
-        device_dow.update_data(id, lat, long,bat_perc,status, out_zone,ble,water)
+        device_dow.update_data(id, lat, long,bat_perc,status, out_zone,ble,water,type)
         print(device_dow.get_libraries())
-        # print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
-    # print(data[0]=="1")
-    # print(data[0]+"Data type")
 open = False
 while open == False:
     try:
@@ -73,19 +71,17 @@ def check():
             time.sleep(1)
             x = True 
         except:
-            # return False
+
             x = False 
         
 
 def start():
     global ser
     for i in range(5):
-        # print(ser.name)
         print(ser.isOpen())     # check which port was really used
         line = ser.readline()   # write a string
         try:
             get_data(line)#
-            # print(device_dow.get_libraries())
             print(device_dow.get_gate_way())
         except:
             pass
@@ -103,12 +99,8 @@ def den_on():
         print("Den on")
     except:
         print("Loi")
-        
-
-# @app.route('/off_light')
 def den_off():
     try:
-        #GPIO.output(PORT_GPIO,GPIO.HIGH)
         time.sleep(1)
         GPIO.output(PORT_GPIO,GPIO.LOW)
         print("Den off")
@@ -145,14 +137,9 @@ def data_device():
         except:
             check()
             pass
-    #     except:
-    #         print("Loi")
-
-    # a, b = device_dow.get_libraries()
     a = device_dow.get_libraries()
     dataA = pd.DataFrame(a)
     return dataA.to_json(orient="records")
-    # String a = "1,001,1,123456,123456,80,z/n";  
 @app.route('/open_saving', methods=['POST'])
 def open_saving():
     request_data = json.loads(request.data)
@@ -161,12 +148,6 @@ def open_saving():
     lat = request_data["lat"]
     long = request_data["long"]
     line = "1,{id_},{status_},{lat},{long},80,z/n\n".format(id_=id_, status_=status_, lat=lat, long=long)
-            # {
-            #   "id":id, 
-            #   "button_status":button_status
-            #   "lat":lat,
-            #   "long":long
-            # }
     try:
         ser.write(line.encode())
     except:
@@ -190,9 +171,7 @@ def on():
    
     global is_on
     is_on  = True
-    #mixer.music.load('file.mp3')
     try:
-        # global is_on
         while is_on == True:
             mixer.music.load('file.mp3')
             den_on()
@@ -243,8 +222,6 @@ def change_distance():
             print(distance)
             ser.write((distance+"\\n").encode())
         return distance
-
-
 if(__name__ == "__main__"):
     app.run(host = "0.0.0.0",debug=False, port = 5000)
     ser.close()             # close port

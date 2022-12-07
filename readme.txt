@@ -13,6 +13,7 @@ không cần truyền vào API cái j cả
     "button_status": null,
     "lost_connect":  "0",
     "is_update": "1",
+    "out_of_safe_zone":"1",
     "ble":"1",
     "water":"1"
   }
